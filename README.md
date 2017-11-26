@@ -4,7 +4,7 @@ Alterclock
 ## Repository Description
 A clock that displays the minute as a decimal. There are 100 minutes in each hour. Each minute is now 36 seconds in duration.
 
-[Alterclock prototype](https://github.com/The13thDoc/alterclock/blob/master/docs/screenshot-2017-11-26-alter-clock.png)
+![Alterclock prototype](https://github.com/The13thDoc/alterclock/blob/master/docs/screenshot-2017-11-26-alter-clock.png)
 
 The radial indicator above each section provides awareness as to when the cycle will reset. Time is always in sync with normal time, as shown.
 
