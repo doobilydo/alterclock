@@ -111,7 +111,7 @@ M 0 0 V -125 A 125 125 1 $mid 1 $x $y z
   int getReal24Hour() => now.hour;
 
   /// Actual hour (12-hour)
-  int getReal12Hour() => ((now.hour % 12) == 0) ? 1 : (now.hour % 12);
+  int getReal12Hour() => ((now.hour % 12) == 0) ? 12 : (now.hour % 12);
 
   /// Actual minutes in terms of seconds.
   int getMs() => getRealMinute() * 60;
