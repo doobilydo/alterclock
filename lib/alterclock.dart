@@ -1,5 +1,7 @@
 import 'dart:core';
 import 'dart:async';
+import 'dart:html';
+import 'dart:math';
 import 'package:angular/angular.dart';
 
 /**
@@ -15,18 +17,19 @@ import 'package:angular/angular.dart';
  */
 @Component(
   selector: 'alter-clock',
-  template: '''
-	<h1>{{title}}</h1>
-	<div>{{realTime}}</div>
-	<br>
-	<div>{{alterTime}}</div>
-	''',
+  templateUrl: 'alterclock_component.html',
 )
 class AlterClock {
   String title = "Alter-clock";
-  String alterTime = "zero hour";
-  String realTime;
   DateTime now;
+
+  var intervalHour,
+      intervalMinute,
+      intervalSecond,
+      militaryHour,
+      normalMinute,
+      normalSecond,
+      meridiem;
 
   AlterClock() {
     update();
@@ -34,76 +37,105 @@ class AlterClock {
 
   /// Update the time.
   void update() {
-    const delay = const Duration(milliseconds: 1);
+    const delay = const Duration(milliseconds: 100);
     new Timer.periodic(delay, (Timer t) => this.display());
   }
 
   /// Display the time.
   display() {
     now = new DateTime.now();
-    //print("\x1B[2J\x1B[0;0H");
-    // ${padLeftVariable(getRealMilliSecond(), 3)}
-    // ${padLeftTwo(getSlowSecond())}
-    realTime = """
-${padLeftTwo(getRealHour())}:${padLeftTwo(getRealMinute())}:${padLeftTwo(getRealSecond())} - Real time
-	    """;
-    alterTime = """
-${padLeftTwo(getRealHour())}:${padLeftTwo(getMi())}:${padLeftTwo(getSi())} - Interval time
-          """;
+
+    intervalHour = "${padLeftTwo(getReal12Hour())}";
+    intervalMinute = "${padLeftTwo(getMi())}";
+    intervalSecond = "${padLeftTwo(getSi())}";
+
+    militaryHour = "${padLeftTwo(getReal24Hour())}";
+    normalMinute = "${padLeftTwo(getRealMinute())}";
+    normalSecond = "${padLeftTwo(getRealSecond())}";
+
+    meridiem = getMeridiem();
+
+    var secondTimer = document.querySelector('#second-timer'),
+        minuteTimer = document.querySelector('#minute-timer'),
+        hourTimer = document.querySelector('#hour-timer');
+
+    var a = (getSi() / 36) * 360,
+        m = (getMi() / 100) * 360,
+        h = (getReal24Hour() / 24) * 360;
+
+    updateTimer(a, secondTimer);
+    updateTimer(m, minuteTimer);
+    updateTimer(h, hourTimer);
+  }
+
+  /// Update the progress meter for
+  /// hour, minute, and second.
+  void updateTimer(var a, element) {
+    var r = (a * PI / 180),
+        x = sin(r) * 125,
+        y = cos(r) * -125,
+        mid = (a > 180) ? 1 : 0,
+        anim = """
+M 0 0 V -125 A 125 125 1 $mid 1 $x $y z
+        """;
+
+    //print(anim);
+    element.setAttribute('d', anim);
   }
 
   /// Left-pad the string with two zeros.
   /// 00, 01, 10
-  String padLeftTwo(int n) {
-    return n.toString().padLeft(2, "0");
-  }
+  String padLeftTwo(int n) => n.toString().padLeft(2, "0");
 
   /// Left-pad the string with 'p' number of zeros.
-  String padLeftVariable(int n, int p) {
-    return n.toString().padLeft(p, "0");
-  }
+  String padLeftVariable(int n, int p) => n.toString().padLeft(p, "0");
+
+  //-------------------------------------
+
+  getMeridiem() =>
+      (getReal24Hour() < 12) ? "am" /*ante meridiem*/ : "pm" /*post meridiem*/;
 
   /// Actual milliseconds.
-  int getRealMilliSecond() {
-    return now.millisecond;
-  }
+  int getRealMilliSecond() => now.millisecond;
 
   /// Actual seconds.
   /// Sh
-  int getRealSecond() {
-    return now.second;
-  }
+  int getRealSecond() => now.second;
 
   /// Actual minutes.
   /// Mh
-  int getRealMinute() {
-    return now.minute;
-  }
+  int getRealMinute() => now.minute;
 
-  /// Actual hour
+  /// Actual hour (24-hour)
   /// Hh
-  int getRealHour() {
-    return now.hour;
-  }
+  int getReal24Hour() => now.hour;
+
+  /// Actual hour (12-hour)
+  int getReal12Hour() => ((now.hour % 12) == 0) ? 1 : (now.hour % 12);
 
   /// Actual minutes in terms of seconds.
-  int getMs() {
-    return getRealMinute() * 60;
-  }
+  int getMs() => getRealMinute() * 60;
+
+  //-------------------------------------
 
   /// A "slow second", equal to 3.6 seconds. There are 10 slow seconds
   /// in one second.
-  int getSlowSecond() {
-    return (getSi() / 3.6).truncate();
-  }
+  /// (Don't think I want to use this.)
+  int getSlowSecond() => (getSi() / 3.6).truncate();
 
   /// Interval second as integer.
-  int getSi() {
-    return (getMs() + getRealSecond()) % 36;
-  }
+  int getSi() => (getMs() + getRealSecond()) % 36;
 
   /// Interval minute as integer.
-  int getMi() {
-    return ((getMs() + getRealSecond()) / 36).truncate();
-  }
+  int getMi() => ((getMs() + getRealSecond()) / 36).truncate();
+
+  //-------------------------------------
+
+  /// Convert Interval minute to normal minute.
+  int convertToNormalMinute(int intervalMinute) =>
+      ((intervalMinute / 100) * 60).truncate();
+
+  /// Convert Interval seconds to normal seconds.
+//  int convertToNormalSecond(int intervalSecond, intervalMinute, normalMinute) =>
+
 }

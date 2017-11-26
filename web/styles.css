@@ -23,6 +23,50 @@ a {
   cursor: pointer;
   cursor: hand;
 }
+
+.flow {
+    display: flex;
+    float: left;    
+}
+
+.column {
+    margin: 2px;
+}
+
+.top {
+    font-size: x-large;
+}
+
+.bottom {
+    font-size: smaller;
+}
+
+.svg {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+/*  stroke: blueviolet;*/
+  stroke-width: 30px;
+/*  fill: none;*/
+}
+
+.ring {
+    stroke: blueviolet;
+    fill: none;
+    z-index: 0;
+}
+
+.center {
+    fill: white;
+    stroke: white;
+    stroke-width: 125px;
+    z-index: 5;
+}
+
+/*----------------------------------*/
+
 button {
   font-family: Arial;
   background-color: #eee;
