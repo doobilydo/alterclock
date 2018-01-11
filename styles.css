@@ -2,59 +2,112 @@
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 /* Master Styles */
+html, body {
+  /* Center everything horizontally and vertically.*/
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
 h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
+
 h2, h3 {
   color: #444;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
+
 body {
   margin: 2em;
+  display: table-cell;
+  vertical-align: middle;
 }
+
 body, input[text], button {
   color: #888;
   font-family: Cambria, Georgia;
 }
+
 a {
   cursor: pointer;
   cursor: hand;
 }
 
-.flow {
-    display: flex;
-    float: left;    
-}
 
-.column {
-    margin: 2px;
-}
+/*----------------------------------*/
+/*
+Grid layout
+*/
 
-.top {
+.times-dates {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr .5fr 1fr;
+    grid-template-columns: 1fr .5fr 1fr .5fr 1fr 1fr;
+    grid-gap: 0px;
+    grid-template-areas:
+    "t1 .  t2 .  t3 ."
+    "a1 a2 a3 a4 a5 a6"
+    "f1 .  f2 .  f3 ."
+    ".  .  .  .  .  ."
+    "j  j  j  j  j  ."
+    "h  h  h  h  h  .";
+    text-align: center;
+    }
+/*
+t = timer
+a = alterclock
+f = 24-hour
+j = julian year
+h = holcene year
+*/
+
+.timer1 {grid-area: t1;}
+.timer2 {grid-area: t2;}
+.timer3 {grid-area: t3;}
+
+.alterclock1 {grid-area: a1;}
+.alterclock2 {grid-area: a2;}
+.alterclock3 {grid-area: a3;}
+.alterclock4 {grid-area: a4;}
+.alterclock5 {grid-area: a5;}
+.alterclock6 {grid-area: a6;}
+
+.twentyfour-hour1 {grid-area: f1;}
+.twentyfour-hour2 {grid-area: f2;}
+.twentyfour-hour3 {grid-area: f3;}
+
+.julian {grid-area: j;}
+.holocene {grid-area: h;}
+
+/*----------------------------------*/
+
+.x-large {
     font-size: x-large;
 }
 
-.bottom {
+.smaller {
     font-size: smaller;
 }
 
 .svg {
   display: block;
+  height: 20px;
   margin: 0 auto;
   position: relative;
-  width: 20px;
-  height: 20px;
-/*  stroke: blueviolet;*/
   stroke-width: 30px;
-/*  fill: none;*/
+  width: 20px;
 }
 
 .ring {
-    stroke: blueviolet;
     fill: none;
+    stroke: blueviolet;
     z-index: 0;
 }
 
@@ -67,92 +120,6 @@ a {
 
 /*----------------------------------*/
 
-button {
-  font-family: Arial;
-  background-color: #eee;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  cursor: hand;
-}
-button:hover {
-  background-color: #cfd8dc;
-}
-button:disabled {
-  background-color: #eee;
-  color: #aaa;
-  cursor: auto;
-}
-
-/* Navigation link styles */
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-right: 10px;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
-}
-nav a:visited, a:link {
-  color: #607D8B;
-}
-nav a:hover {
-  color: #039be5;
-  background-color: #CFD8DC;
-}
-nav a.active {
-  color: #039be5;
-}
-
-/* items class */
-.items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 24em;
-}
-.items li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.items li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-.items li.selected {
-  background-color: #CFD8DC;
-  color: white;
-}
-.items li.selected:hover {
-  background-color: #BBD8DC;
-}
-.items .text {
-  position: relative;
-  top: -3px;
-}
-.items .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607D8B;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
-}
 /* everywhere else */
 * {
   font-family: Arial, Helvetica, sans-serif;

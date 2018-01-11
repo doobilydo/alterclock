@@ -1,0 +1,36 @@
+
+<div class='times-dates'>
+     <!-- timers -->
+    <svg class="svg timer1" viewBox="0 0 300 300">
+        <path class="ring" id="hour-timer" transform="translate(150, 150)"/>
+        <circle class="center" cx="150" cy="150" r="50" />`
+    </svg>
+    <svg class="svg timer2" viewBox="0 0 300 300">
+        <path class="ring" id="minute-timer" transform="translate(150, 150)"/>
+        <circle class="center" cx="150" cy="150" r="50" />`
+    </svg>
+    <svg class="svg timer3" viewBox="0 0 300 300">
+        <path class="ring" id="second-timer" transform="translate(150, 150)"/>
+        <circle class="center" cx="150" cy="150" r="50" />`
+    </svg>
+
+    <!-- alterclock -->
+    <div class='x-large alterclock1'>{{intervalHour}}</div>
+    <div class='x-large alterclock2'>.</div>
+    <div class='x-large alterclock3'>{{intervalMinute}}</div>
+    <div class='x-large alterclock4'>:</div>
+    <div class='x-large alterclock5'>{{intervalSecond}}</div>
+    <div class='smaller alterclock6'>{{meridiem}}</div>
+
+    <!-- 24-hour -->
+    <div class='smaller twentyfour-hour1'>({{militaryHour}})</div>
+    <div class='smaller twentyfour-hour2'>({{normalMinute}})</div>
+    <div class='smaller twentyfour-hour3'>({{normalSecond}})</div>
+
+    <!-- year -->
+    <div class="smaller julian">{{gregorianYear}} CE</div>
+    
+    <div class="x-large holocene">{{holoceneYear}} HE</div>
+</div>
+
+
